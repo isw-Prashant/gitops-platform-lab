@@ -1,0 +1,32 @@
+# GitOps Platform Lab
+
+This repository demonstrates a production-style GitOps platform using:
+
+- Kubernetes
+- ArgoCD
+- ApplicationSet
+- Helm
+- GitHub Actions
+- Terraform
+- Prometheus
+- Grafana
+
+Architecture:
+
+                    GitHub
+                       │
+                GitOps Repository
+                       │
+                  ArgoCD
+                       │
+               ApplicationSets
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+   Platform Apps   Monitoring    Business Apps
+        │              │              │
+        └──────────────┴──────────────┘
+                       │
+                   Minikube
+
+GitHub -> ArgoCD -> Kubernetes
