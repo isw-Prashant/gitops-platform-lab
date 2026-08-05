@@ -1,21 +1,26 @@
+# Bootstrap Argo CD Projects
+# Add Project manifests in this file.
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
 metadata:
-  name: root-app
+  name: projects
   namespace: argocd
+
 spec:
   project: default
 
   source:
     repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
     targetRevision: HEAD
-    path: applications/sample-nginx
+    path: projects/
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: demo
+    namespace: argocd
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
