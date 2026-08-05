@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+
+metadata:
+  name: workloads
+  namespace: argocd
+
+spec:
+  goTemplate: true
+
+  generators:
+    - git:
+        repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
+        revision: HEAD
+        directories:
+          - path: applications/sample-nginx
+
+  template:
+    metadata:
+      name: "{{ .path.basename }}"
+
+    spec:
+      project: workloads
+
+      source:
+        repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
+        targetRevision: HEAD
+        path: "{{ .path.path }}"
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: demo
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+
+        syncOptions:
+          - CreateNamespace=true
