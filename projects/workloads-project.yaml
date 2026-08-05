@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+
+metadata:
+  name: workloads
+  namespace: argocd
+
+spec:
+  description: Business workload applications
+
+  sourceRepos:
+    - https://github.com/isw-Prashant/gitops-platform-lab.git
+
+  destinations:
+    - namespace: demo
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
