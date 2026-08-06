@@ -2,39 +2,60 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 
 metadata:
-  name: workloads
+  name: matrix-workloads
   namespace: argocd
 
 spec:
   goTemplate: true
 
   generators:
-    - git:
-        repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
-        revision: HEAD
-        directories:
-          - path: applications/sample-nginx
+
+    - matrix:
+
+        generators:
+
+          # Generator 1
+          - git:
+              repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
+              revision: HEAD
+
+              directories:
+                - path: applications/*
+
+          # Generator 2
+          - clusters: {}
 
   template:
+
     metadata:
-      name: "{{ .path.basename }}"
+      name: "{{ .path.basename }}-{{ .nameNormalized }}"
 
     spec:
+
       project: workloads
 
       source:
+
         repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
+
         targetRevision: HEAD
+
         path: "{{ .path.path }}"
 
       destination:
-        server: https://prod-control-plane:6443
+
+        server: "{{ .server }}"
+
         namespace: demo
 
       syncPolicy:
+
         automated:
+
           prune: true
+
           selfHeal: true
 
         syncOptions:
-          - CreateNamespace=true
+
+        - CreateNamespace=true
