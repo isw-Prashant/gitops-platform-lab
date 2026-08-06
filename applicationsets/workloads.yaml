@@ -13,7 +13,7 @@ spec:
         repoURL: https://github.com/isw-Prashant/gitops-platform-lab.git
         revision: HEAD
         directories:
-          - path: applications/simple-nginx
+          - path: applications/sample-nginx
 
   template:
     metadata:
