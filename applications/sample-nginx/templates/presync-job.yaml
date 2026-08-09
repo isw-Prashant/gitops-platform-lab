@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: "{{ include "sample-nginx.fullname" . }}-presync"
+
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+
+      containers:
+        - name: presync
+          image: busybox
+
+          command:
+            - sh
+            - -c
+            - |
+              echo "Running PreSync hook..."
+              sleep 10
+              echo "PreSync completed."
