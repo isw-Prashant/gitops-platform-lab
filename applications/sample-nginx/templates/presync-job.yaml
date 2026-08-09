@@ -6,7 +6,6 @@ metadata:
 
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 
 spec:
   template:
@@ -14,13 +13,13 @@ spec:
       restartPolicy: Never
 
       containers:
-        - name: presync
-          image: busybox
+      - name: presync
+        image: busybox
 
-          command:
-            - sh
-            - -c
-            - |
-              echo "Running PreSync hook..."
-              sleep 10
-              echo "PreSync completed."
+        command:
+        - sh
+        - -c
+        - |
+          echo "PreSync started"
+          sleep 120
+          echo "PreSync finished"
