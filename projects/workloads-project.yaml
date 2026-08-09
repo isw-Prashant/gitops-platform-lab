@@ -22,3 +22,11 @@ spec:
   namespaceResourceWhitelist:
     - group: "*"
       kind: "*"
+
+  syncWindows:
+    - kind: deny
+      schedule: "*/5 * * * *"
+      duration: 2m
+      applications:
+        - "*"
+      manualSync: true
