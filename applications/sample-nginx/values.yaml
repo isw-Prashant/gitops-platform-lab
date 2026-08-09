@@ -5,13 +5,11 @@ image:
   tag: "1.29"
 service:
   type: ClusterIP
-  port: 80  
+  port: 80
+  targetPort: 80
 resources: {}
 labels:
   app: nginx
 ingress:
   enabled: True
   host: sample.local
-
-service:
-  type: ClusterIP
